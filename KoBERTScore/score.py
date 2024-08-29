@@ -415,7 +415,7 @@ def idf_numpy_to_embed(idf_array):
         >>> type(idf_embed)
         $ torch.nn.modules.sparse.Embedding
     """
-    idf = torch.tensor([idf_array]).T
+    idf = torch.tensor(np.array([idf_array])).T
     idf_embed = torch.nn.Embedding(idf.size()[0], 1, _weight=idf)
     idf_embed.weight.requires_grad = False
     return idf_embed
