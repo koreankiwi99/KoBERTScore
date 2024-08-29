@@ -125,8 +125,9 @@ def bert_forwarding(bert_model, input_ids, attention_mask=None, output_layer_ind
         attention_mask = attention_mask.to(device)
 
     with torch.no_grad():
-        _, _, hidden_states = bert_model(
-            input_ids, attention_mask=attention_mask, output_hidden_states=True)
+        output = bert_model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
+        hidden_states = output.hidden_states
+      
     if output_layer_index == 'all':
         return [h.cpu() for h in hidden_states]
     return hidden_states[output_layer_index].cpu()
@@ -453,5 +454,5 @@ def train_idf(bert_tokenizer, references, batch_size=1000, verbose=True):
     indices, df = zip(*counter.items())
     idf[np.array(indices)] += np.array(df)
     idf = 1 / idf
-    idf[np.array(bert_tokenizer.all_special_ids, dtype=np.int)] = 0
+    idf[np.array(bert_tokenizer.all_special_ids, dtype=np.int32)] = 0
     return idf
