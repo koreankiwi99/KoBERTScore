@@ -274,7 +274,7 @@ class BERTScore:
         n_examples = len(references)
         n_batch = math.ceil(n_examples / batch_size)
         if verbose:
-            step_iterator = tqdm(range(n_batch), desc='Calculating BERTScore', total=n_batch)
+            step_iterator = tqdm(range(n_batch), desc='Calculating BERTScore', total=n_batch, disable=True)
         else:
             step_iterator = range(n_batch)
 
@@ -439,7 +439,7 @@ def train_idf(bert_tokenizer, references, batch_size=1000, verbose=True):
     begin_index = list(range(0, n_sents, batch_size))
 
     if verbose:
-        iterator = tqdm(begin_index, total=round(n_sents / batch_size), desc='Train IDF')
+        iterator = tqdm(begin_index, total=round(n_sents / batch_size), desc='Train IDF', disable=True)
     else:
         iterator = begin_index
 
